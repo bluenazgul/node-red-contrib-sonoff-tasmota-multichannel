@@ -17,6 +17,16 @@ npm install --save node-red-contrib-sonoff-tasmota
 To use the node, just drag the node from the Sonoff section to the Flow, add the id and the mqtt broker. 
 To control the switch you can use a true/false input node or connect a UI Button.
 
+Toggle:
+send a Message with topic 'command' and payload 'toggle' to the node to toggle the tasmota device
+
+Color:
+send a Message with topic 'command' and payload tbd
+
+Dimmer:
+send a Message with topic 'command' and payload tbd
+
+
 ## Sample FLOW
 
 ![Sample Flow](/media/flow.png?raw=true)
