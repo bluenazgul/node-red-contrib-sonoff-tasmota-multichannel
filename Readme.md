@@ -21,10 +21,10 @@ Toggle:
 send a Message with topic 'command' and payload 'toggle' to the node to toggle the tasmota device
 
 Color:
-send a Message with topic 'command' and payload tbd
+send a Message with topic 'color' and payload Color
 
 Dimmer:
-send a Message with topic 'command' and payload tbd
+send a Message with topic 'dimmer' and payload number in percent
 
 
 ## Sample FLOW
