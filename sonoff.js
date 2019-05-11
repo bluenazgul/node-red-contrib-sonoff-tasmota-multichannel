@@ -15,6 +15,8 @@ module.exports = function (RED) {
 
         var topicCmdPower = `${config.cmdPrefix}/${config.device}/power`;
         var topicCmdStatus = `${config.cmdPrefix}/${config.device}/status`;
+        var topicCmdColor = `${config.cmdPrefix}/${config.device}/color`;
+        var topicCmdDimmer = `${config.cmdPrefix}/${config.device}/dimmer`;
 
         var topicStatsPower = `${config.statPrefix}/${config.device}/POWER`;
         var topicStatsStatus = `${config.statPrefix}/${config.device}/STATUS`;
@@ -31,16 +33,28 @@ module.exports = function (RED) {
 
         if (brokerConnection) {
             brokerConnection.register(this);
-            this.status({ fill: 'yellow', shape: 'dot', text: 'Connecting...' });
+            this.status({
+                fill: 'yellow',
+                shape: 'dot',
+                text: 'Connecting...'
+            });
 
             // Check if the node is online
             brokerConnection.subscribe(topicTeleLWT, 2, (topic, payload) => {
                 const stringPayload = payload.toString();
                 debug('Topic: %s, Value: %s', topic, stringPayload);
                 if (stringPayload === 'Online') {
-                    this.status({ fill: 'green', shape: 'ring', text: 'Online' });
+                    this.status({
+                        fill: 'green',
+                        shape: 'ring',
+                        text: 'Online'
+                    });
                 } else {
-                    this.status({ fill: 'red', shape: 'dot', text: 'Offline' });
+                    this.status({
+                        fill: 'red',
+                        shape: 'dot',
+                        text: 'Offline'
+                    });
                 }
             });
 
@@ -50,14 +64,30 @@ module.exports = function (RED) {
                 try {
                     const jsonPayload = JSON.parse(stringPayload);
                     if (jsonPayload.Status.Power === 1) {
-                        this.status({ fill: 'green', shape: 'dot', text: 'On' });
-                        this.send({ payload: true });
+                        this.status({
+                            fill: 'green',
+                            shape: 'dot',
+                            text: 'On'
+                        });
+                        this.send({
+                            payload: true
+                        });
                     } else {
-                        this.status({ fill: 'grey', shape: 'dot', text: 'Off' });
-                        this.send({ payload: false });
+                        this.status({
+                            fill: 'grey',
+                            shape: 'dot',
+                            text: 'Off'
+                        });
+                        this.send({
+                            payload: false
+                        });
                     }
                 } catch (err) {
-                    this.status({ fill: 'red', shape: 'dot', text: 'Error processing Status from device' });
+                    this.status({
+                        fill: 'red',
+                        shape: 'dot',
+                        text: 'Error processing Status from device'
+                    });
                     this.error(err, 'Error processing Status from device');
                 }
             });
@@ -68,12 +98,24 @@ module.exports = function (RED) {
                 debug('Topic: %s, Value: %s', topic, stringPayload);
 
                 if (stringPayload === config.onValue) {
-                    this.status({ fill: 'green', shape: 'dot', text: 'On' });
-                    this.send({ payload: true });
+                    this.status({
+                        fill: 'green',
+                        shape: 'dot',
+                        text: 'On'
+                    });
+                    this.send({
+                        payload: true
+                    });
                 }
                 if (stringPayload === config.offValue) {
-                    this.status({ fill: 'grey', shape: 'dot', text: 'Off' });
-                    this.send({ payload: false });
+                    this.status({
+                        fill: 'grey',
+                        shape: 'dot',
+                        text: 'Off'
+                    });
+                    this.send({
+                        payload: false
+                    });
                 }
             });
 
@@ -82,50 +124,76 @@ module.exports = function (RED) {
                 debug('INPUT: %s', JSON.stringify(msg));
                 const payload = msg.payload;
                 const topic = msg.topic;
-                
-                   
-                if (topic == 'command') {
-                    if ( payload == 'toggle')
-                   {
-                    this.status({ fill: 'green', shape: 'dot', text: 'Toggle sent' });
-                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, { qos: 0, retain: false });
-                    this.send({ payload: true });
-                   }
-                   else if ( payload == "dimmer")
-                   {
-                    this.status({ fill: 'green', shape: 'dot', text: 'Dimmer sent' });
-                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, { qos: 0, retain: false });
-                    this.send({ payload: true });
-                   }
-                   else if ( payload == "color")
-                   {
-                    this.status({ fill: 'green', shape: 'dot', text: 'Color sent' });
-                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, { qos: 0, retain: false });
-                    this.send({ payload: true });
-                   }
-                   else
-                   {
-                    this.status({ fill: 'red', shape: 'dot', text: 'unknown command' });
-                     
-                   }
-                }
-                else {
-                    // We handle boolean, the onValue and msg.On to support homekit
-                    if (payload === true || payload === config.onValue) {
-                        brokerConnection.client.publish(topicCmdPower, config.onValue, { qos: 0, retain: false });
-                        this.send({ payload: true });
-                    }
 
-                    if (payload === false || payload === config.offValue) {
-                        brokerConnection.client.publish(topicCmdPower, config.offValue, { qos: 0, retain: false });
-                        this.send({ payload: false });
-                    }
+                if (RED.util.getMessageProperty(msg.payload, 'color')) {
+                    this.status({
+                        fill: 'green',
+                        shape: 'dot',
+                        text: 'Color sent'
+                    });
+                    brokerConnection.client.publish(topicCmdColor, RED.util.getMessageProperty(msg.payload, 'color'), {
+                        qos: 0,
+                        retain: false
+                    });
+                    this.send({
+                        payload: true
+                    });
+                } else if (payload == 'toggle') {
+                    this.status({
+                        fill: 'green',
+                        shape: 'dot',
+                        text: 'Toggle sent'
+                    });
+                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, {
+                        qos: 0,
+                        retain: false
+                    });
+                    this.send({
+                        payload: true
+                    });
+                } else if (RED.util.getMessageProperty(msg.payload, 'dimmer')) {
+                    this.status({
+                        fill: 'green',
+                        shape: 'dot',
+                        text: 'Dimmer sent'
+                    });
+                    brokerConnection.client.publish(topicCmdDimmer, RED.util.getMessageProperty(msg.payload, 'dimmer'), {
+                        qos: 0,
+                        retain: false
+                    });
+                    this.send({
+                        payload: true
+                    });
+                } else {
+                    this.status({
+                        fill: 'red',
+                        shape: 'dot',
+                        text: 'unknown command'
+                    });
+
                 }
+                /*         
+                         else {
+                             // We handle boolean, the onValue and msg.On to support homekit
+                             if (payload === true || payload === config.onValue) {
+                                 brokerConnection.client.publish(topicCmdPower, config.onValue, { qos: 0, retain: false });
+                                 this.send({ payload: true });
+                             }
+
+                             if (payload === false || payload === config.offValue) {
+                                 brokerConnection.client.publish(topicCmdPower, config.offValue, { qos: 0, retain: false });
+                                 this.send({ payload: false });
+                             }
+                         }*/
             });
 
             // Publish a start command to get the Status
             brokerConnection.client.publish(topicCmdStatus);
-            this.status({ fill: 'yellow', shape: 'ring', text: 'Requesting Status...' });
+            this.status({
+                fill: 'yellow',
+                shape: 'ring',
+                text: 'Requesting Status...'
+            });
 
             // Remove Connections
             this.on('close', done => {
@@ -135,7 +203,11 @@ module.exports = function (RED) {
                 brokerConnection.deregister(this, done);
             });
         } else {
-            this.status({ fill: 'red', shape: 'dot', text: 'Could not connect to mqtt' });
+            this.status({
+                fill: 'red',
+                shape: 'dot',
+                text: 'Could not connect to mqtt'
+            });
         }
     }
 
