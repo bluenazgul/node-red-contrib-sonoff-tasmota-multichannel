@@ -126,65 +126,22 @@ module.exports = function (RED) {
                 const topic = msg.topic;
 
                 if (RED.util.getMessageProperty(msg.payload, 'color')) {
-                    this.status({
-                        fill: 'green',
-                        shape: 'dot',
-                        text: 'Color sent'
-                    });
-                    brokerConnection.client.publish(topicCmdColor, RED.util.getMessageProperty(msg.payload, 'color'), {
-                        qos: 0,
-                        retain: false
-                    });
-                    this.send({
-                        payload: true
-                    });
+                    this.status({fill: 'green', shape: 'dot',text: 'Color sent'});
+                    var color = RED.util.getMessageProperty(msg.payload, 'color');
+                    brokerConnection.client.publish(topicCmdColor, color , {qos: 0,retain: false});
+                    this.send({payload: true});
                 } else if (payload == 'toggle') {
-                    this.status({
-                        fill: 'green',
-                        shape: 'dot',
-                        text: 'Toggle sent'
-                    });
-                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, {
-                        qos: 0,
-                        retain: false
-                    });
-                    this.send({
-                        payload: true
-                    });
+                    this.status({fill: 'green',shape: 'dot',text: 'Toggle sent'});
+                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, {qos: 0,retain: false});
+                    this.send({ payload: true });
                 } else if (RED.util.getMessageProperty(msg.payload, 'dimmer')) {
-                    this.status({
-                        fill: 'green',
-                        shape: 'dot',
-                        text: 'Dimmer sent'
-                    });
-                    brokerConnection.client.publish(topicCmdDimmer, RED.util.getMessageProperty(msg.payload, 'dimmer'), {
-                        qos: 0,
-                        retain: false
-                    });
-                    this.send({
-                        payload: true
-                    });
+                    this.status({fill: 'green',shape: 'dot',text: 'Dimmer sent'});
+                    var dimm = RED.util.getMessageProperty(msg.payload, 'dimmer');
+                    brokerConnection.client.publish(topicCmdDimmer, dimm, {qos: 0,retain: false});
+                    this.send({payload: true});
                 } else {
-                    this.status({
-                        fill: 'red',
-                        shape: 'dot',
-                        text: 'unknown command'
-                    });
-
+                    this.status({fill: 'red',shape: 'dot',text: 'unknown command'});
                 }
-                /*         
-                         else {
-                             // We handle boolean, the onValue and msg.On to support homekit
-                             if (payload === true || payload === config.onValue) {
-                                 brokerConnection.client.publish(topicCmdPower, config.onValue, { qos: 0, retain: false });
-                                 this.send({ payload: true });
-                             }
-
-                             if (payload === false || payload === config.offValue) {
-                                 brokerConnection.client.publish(topicCmdPower, config.offValue, { qos: 0, retain: false });
-                                 this.send({ payload: false });
-                             }
-                         }*/
             });
 
             // Publish a start command to get the Status
