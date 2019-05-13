@@ -16,6 +16,8 @@ module.exports = function (RED) {
         var topicCmdPower = `${config.cmdPrefix}/${config.device}/power`;
         var topicCmdStatus = `${config.cmdPrefix}/${config.device}/status`;
         var topicCmdColor = `${config.cmdPrefix}/${config.device}/color`;
+        var topicCmdColor2 = `${config.cmdPrefix}/${config.device}/color2`;
+        var topicCmdColorTemperature = `${config.cmdPrefix}/${config.device}/CT`;
         var topicCmdDimmer = `${config.cmdPrefix}/${config.device}/dimmer`;
 
         var topicStatsPower = `${config.statPrefix}/${config.device}/POWER`;
@@ -98,24 +100,12 @@ module.exports = function (RED) {
                 debug('Topic: %s, Value: %s', topic, stringPayload);
 
                 if (stringPayload === config.onValue) {
-                    this.status({
-                        fill: 'green',
-                        shape: 'dot',
-                        text: 'On'
-                    });
-                    this.send({
-                        payload: true
-                    });
+                    this.status({fill: 'green',shape: 'dot',text: 'On'});
+                    this.send({payload: true});
                 }
                 if (stringPayload === config.offValue) {
-                    this.status({
-                        fill: 'grey',
-                        shape: 'dot',
-                        text: 'Off'
-                    });
-                    this.send({
-                        payload: false
-                    });
+                    this.status({fill: 'grey',shape: 'dot',text: 'Off'});
+                    this.send({payload: false});
                 }
             });
 
@@ -129,6 +119,16 @@ module.exports = function (RED) {
                     this.status({fill: 'green', shape: 'dot',text: 'Color sent'});
                     var color = RED.util.getMessageProperty(msg.payload, 'color');
                     brokerConnection.client.publish(topicCmdColor, color , {qos: 0,retain: false});
+                    this.send({payload: true});
+                } else if (RED.util.getMessageProperty(msg.payload, 'color2')) {
+                    this.status({fill: 'green', shape: 'dot',text: 'Color sent'});
+                    var color = RED.util.getMessageProperty(msg.payload, 'color2');
+                    brokerConnection.client.publish(topicCmdColor2, color , {qos: 0,retain: false});
+                    this.send({payload: true});
+                } else if (RED.util.getMessageProperty(msg.payload, 'CT')) {
+                    this.status({fill: 'green', shape: 'dot',text: 'ColorTemperature sent'});
+                    var color = RED.util.getMessageProperty(msg.payload, 'CT');
+                    brokerConnection.client.publish(topicCmdColorTemperature, color , {qos: 0,retain: false});
                     this.send({payload: true});
                 } else if (payload == 'toggle') {
                     this.status({fill: 'green',shape: 'dot',text: 'Toggle sent'});
