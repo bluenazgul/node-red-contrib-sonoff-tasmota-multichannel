@@ -9,7 +9,7 @@
 Install `node-red-contrib-sonoff-tasmota` using [npm](https://www.npmjs.com/):
 
 ```bash
-npm install --save node-red-contrib-sonoff-tasmota
+npm install --save node-red-contrib-sonoff-tasmota-enhanced
 ```
 
 ## Usage
@@ -74,5 +74,5 @@ send a Message with topic 'dimmer' and payload number in percent
 
 MIT © [Steffen Müller](http://steffen.io)
 
-[npm-url]: https://npmjs.org/package/node-red-contrib-sonoff-tasmota
-[npm-image]: https://badge.fury.io/js/node-red-contrib-sonoff-tasmota.svg
+[npm-url]: https://www.npmjs.com/package/node-red-contrib-sonoff-tasmota-enhanced
+[npm-image]: https://www.npmjs.com/package/node-red-contrib-sonoff-tasmota-enhanced.svg
