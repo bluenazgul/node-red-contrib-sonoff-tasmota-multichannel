@@ -115,7 +115,15 @@ module.exports = function (RED) {
                 const payload = msg.payload;
                 const topic = msg.topic;
 
-                if (RED.util.getMessageProperty(msg.payload, 'color')) {
+                if ( topic == "color")
+                {
+                    debug('Topic: %s, Value: %s', topic, msg);
+                    this.status({fill: 'green', shape: 'dot',text: 'Color sent'});
+                    brokerConnection.client.publish(topicCmdColor, payload , {qos: 0,retain: false});
+                    this.send({payload: true});
+                }
+                else if (RED.util.getMessageProperty(msg.payload, 'color')) {
+                    debug('Topic: %s, Value: %s', topic, msg);
                     this.status({fill: 'green', shape: 'dot',text: 'Color sent'});
                     var color = RED.util.getMessageProperty(msg.payload, 'color');
                     brokerConnection.client.publish(topicCmdColor, color , {qos: 0,retain: false});
@@ -141,6 +149,7 @@ module.exports = function (RED) {
                     this.send({payload: true});
                 } else {
                     this.status({fill: 'red',shape: 'dot',text: 'unknown command'});
+                    debug('Topic: %s, Value: %s', topic, msg);
                 }
             });
 
