@@ -177,5 +177,5 @@ module.exports = function (RED) {
         }
     }
 
-    RED.nodes.registerType('Sonoff device', SonoffDevice);
+    RED.nodes.registerType('Sonoff device Enhanced', SonoffDevice);
 };
