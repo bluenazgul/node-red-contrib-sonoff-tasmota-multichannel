@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-sonoff-tasmota-enhanced",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Connect Sonoff Devices running the Sonoff-Tasmota firmware easy to node red",
   "main": "index.js",
   "repository": {
