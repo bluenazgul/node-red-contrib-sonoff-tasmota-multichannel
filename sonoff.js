@@ -142,6 +142,14 @@ module.exports = function (RED) {
                     this.status({fill: 'green',shape: 'dot',text: 'Toggle sent'});
                     brokerConnection.client.publish(topicCmdPower, config.toggleValue, {qos: 0,retain: false});
                     this.send({ payload: true });
+                } else if (payload == 'on') {
+                    this.status({fill: 'green',shape: 'dot',text: 'ON sent'});
+                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, {qos: 0,retain: false});
+                    this.send({ payload: true });
+                } else if (payload == 'off') {
+                    this.status({fill: 'green',shape: 'dot',text: 'OFF sent'});
+                    brokerConnection.client.publish(topicCmdPower, config.toggleValue, {qos: 0,retain: false});
+                    this.send({ payload: true });
                 } else if (RED.util.getMessageProperty(msg.payload, 'dimmer')) {
                     this.status({fill: 'green',shape: 'dot',text: 'Dimmer sent'});
                     var dimm = RED.util.getMessageProperty(msg.payload, 'dimmer');
