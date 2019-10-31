@@ -20,6 +20,9 @@ To control the switch you can use a true/false input node or connect a UI Button
 Toggle:
 send a Message with topic 'command' and payload 'toggle' to the node to toggle the tasmota device
 
+ON/OFF:
+send a Message with topic 'command' and payload 'on' of 'off' to the node to turn ON or OFF the tasmota device
+
 Color:
 send a Message with topic 'color' and payload Color
 
