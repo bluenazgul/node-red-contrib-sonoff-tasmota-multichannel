@@ -144,11 +144,11 @@ module.exports = function (RED) {
                     this.send({ payload: true });
                 } else if (payload == 'on') {
                     this.status({fill: 'green',shape: 'dot',text: 'ON sent'});
-                    brokerConnection.client.publish(topicCmdPower, payload, {qos: 0,retain: false});
+                    brokerConnection.client.publish(topicCmdPower, config.onValue, {qos: 0,retain: false});
                     this.send({ payload: true });
                 } else if (payload == 'off') {
                     this.status({fill: 'green',shape: 'dot',text: 'OFF sent'});
-                    brokerConnection.client.publish(topicCmdPower, payload, {qos: 0,retain: false});
+                    brokerConnection.client.publish(topicCmdPower, config.offValue, {qos: 0,retain: false});
                     this.send({ payload: true });
                 } else if (RED.util.getMessageProperty(msg.payload, 'dimmer')) {
                     this.status({fill: 'green',shape: 'dot',text: 'Dimmer sent'});
