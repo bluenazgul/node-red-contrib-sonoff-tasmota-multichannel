@@ -4,12 +4,14 @@
 
 > A [Node-RED](https://nodered.org) node, to control [Sonoff](https://www.itead.cc/) switches running the awesome [Sonoff-Tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware
 
+This Release based on https://github.com/EdgarM73/node-red-contrib-sonoff-tasmota which is based on the original work by [Steffen Müller](http://steffen.io) I only added Multichannel support for Devices up to 8-Channel
+
 ## Installation
 
-Install `node-red-contrib-sonoff-tasmota` using [npm](https://www.npmjs.com/):
+Install `node-red-contrib-sonoff-tasmota-multichannel` using [npm](https://www.npmjs.com/):
 
 ```bash
-npm install --save node-red-contrib-sonoff-tasmota-enhanced
+npm install --save node-red-contrib-sonoff-tasmota-multichannel
 ```
 
 ## Usage
@@ -21,7 +23,7 @@ Toggle:
 send a Message with topic 'command' and payload 'toggle' to the node to toggle the tasmota device
 
 ON/OFF:
-send a Message with topic 'command' and payload 'on' of 'off' to the node to turn ON or OFF the tasmota device
+send a Message with topic 'command' and payload 'on' or 'off' to the node to turn ON or OFF the tasmota device
 
 Color:
 send a Message with topic 'color' and payload Color
