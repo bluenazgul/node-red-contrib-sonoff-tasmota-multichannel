@@ -1,4 +1,4 @@
-# node-red-contrib-sonoff-tasmota
+# node-red-contrib-sonoff-tasmota-multichannel
 
 [![NPM version][npm-image]][npm-url]
 
