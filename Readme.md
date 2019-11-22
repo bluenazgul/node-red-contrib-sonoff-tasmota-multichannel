@@ -4,7 +4,7 @@
 
 > A [Node-RED](https://nodered.org) node, to control [Sonoff](https://www.itead.cc/) switches running the awesome [Sonoff-Tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware with support for Multichannel Devices
 
-This Release based on https://github.com/EdgarM73/node-red-contrib-sonoff-tasmota which is based on the original work by [Steffen Müller](http://steffen.io) I only added Multichannel support for Devices up to 8-Channel (this Multichannel Support was created by [gitolicious](https://github.com/gitolicious/node-red-contrib-sonoff-tasmota)) but never released. So first i tested it on my local maschine and after that i put it on Github so everyone could use it.
+This Release based on the Work from [EdgarM73](https://github.com/EdgarM73/node-red-contrib-sonoff-tasmota) which is based on the original work by [Steffen Müller](http://steffen.io) I only added Multichannel support for Devices up to 8-Channel (this Multichannel Support was created by [gitolicious](https://github.com/gitolicious/node-red-contrib-sonoff-tasmota)) but never released. So first i tested it on my local maschine and after that i put it on Github so everyone could use it.
 
 ## Installation
 
@@ -33,7 +33,7 @@ send a Message with topic 'dimmer' and payload number in percent
 
 ## Screenshot
 
-![Sample Config Interface]/(/media/config-ui.png?raw=true)
+![Sample Config Interface](/media/config-ui.png?raw=true)
 
 
 ## Sample FLOW
