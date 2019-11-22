@@ -8,8 +8,8 @@
     "url": "https://github.com/bluenazgul/node-red-contrib-sonoff-tasmota-multichannel"
   },
   "author": "Steffen Müller",
-  "maintainers": ["Edgar Miller"],
-  "contributors": ["Edgar Miller", "Andre Schlüter"],
+  "maintainers": ["Andre Schlüter"],
+  "contributors": ["Edgar Miller", "Andre Schlüter", "gitolicious§],
   "license": "MIT",
   "devDependencies": {
     "xo": "^0.18.1"
