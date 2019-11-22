@@ -2,9 +2,9 @@
 
 [![NPM version][npm-image]][npm-url]
 
-> A [Node-RED](https://nodered.org) node, to control [Sonoff](https://www.itead.cc/) switches running the awesome [Sonoff-Tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware
+> A [Node-RED](https://nodered.org) node, to control [Sonoff](https://www.itead.cc/) switches running the awesome [Sonoff-Tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware with support for Multichannel Devices
 
-This Release based on https://github.com/EdgarM73/node-red-contrib-sonoff-tasmota which is based on the original work by [Steffen Müller](http://steffen.io) I only added Multichannel support for Devices up to 8-Channel
+This Release based on https://github.com/EdgarM73/node-red-contrib-sonoff-tasmota which is based on the original work by [Steffen Müller](http://steffen.io) I only added Multichannel support for Devices up to 8-Channel (this Multichannel Support was created by [gitolicious](https://github.com/gitolicious/node-red-contrib-sonoff-tasmota)) but never released. So first i tested it on my local maschine and after that i put it on Github so everyone could use it.
 
 ## Installation
 
@@ -31,78 +31,54 @@ send a Message with topic 'color' and payload Color
 Dimmer:
 send a Message with topic 'dimmer' and payload number in percent
 
+## Screenshot
+
+![Sample Config Interface]/(/media/config-ui.png?raw=true)
+
 
 ## Sample FLOW
 
-![Sample Flow](/media/flow.png?raw=true)
+![Sample Flow](/media/sample.png?raw=true)
+
+In my Sample ia also use [WeMo-Emulator](https://flows.nodered.org/node/node-red-contrib-wemo-emulator) to make my Amazon Alexa Device controll the Tasmato Port
 
 ```json
 [
     {
-        "id": "13346fe3.f9dbb",
-        "type": "tab",
-        "label": "Flow 3",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "44ae399c.bb1f98",
-        "type": "Sonoff device Enhanced",
-        "z": "13346fe3.f9dbb",
-        "mode": "0",
-        "broker": "29d7744c.2a685c",
-        "device": "wzindirekt",
-        "name": "",
-        "onValue": "ON",
-        "offValue": "OFF",
-        "toggleValue": "toggle",
-        "cmdPrefix": "cmnd",
-        "statPrefix": "stat",
-        "telePrefix": "tele",
-        "x": 580,
-        "y": 200,
-        "wires": [
-            [
-                "5f49cd7a.34a5d4",
-                "a622f4f8.d75468"
-            ]
-        ]
-    },
-    {
-        "id": "5f49cd7a.34a5d4",
+        "id": "f946cb9c.c50878",
         "type": "ui_switch",
-        "z": "13346fe3.f9dbb",
+        "z": "4352e0fd.48412",
         "name": "",
-        "label": "switch",
+        "label": "Steckdose 1",
         "tooltip": "",
-        "group": "9d03a37c.7d0558",
-        "order": 3,
+        "group": "adc57193.8c48b",
+        "order": 1,
         "width": 0,
         "height": 0,
         "passthru": false,
-        "decouple": "false",
+        "decouple": "true",
         "topic": "",
         "style": "",
         "onvalue": "true",
         "onvalueType": "bool",
-        "onicon": "",
-        "oncolor": "",
+        "onicon": "fa-plug",
+        "oncolor": "green",
         "offvalue": "false",
         "offvalueType": "bool",
-        "officon": "",
-        "offcolor": "",
-        "x": 580,
-        "y": 120,
+        "officon": "fa-plug",
+        "offcolor": "gray",
+        "x": 390,
+        "y": 20,
         "wires": [
             [
-                "44ae399c.bb1f98"
+                "67481b8f.dbbeb4"
             ]
         ]
     },
     {
-        "id": "bf67af5f.71565",
+        "id": "41ffeeb4.ea6d9",
         "type": "inject",
-        "z": "13346fe3.f9dbb",
+        "z": "4352e0fd.48412",
         "name": "",
         "topic": "command",
         "payload": "toggle",
@@ -111,58 +87,131 @@ send a Message with topic 'dimmer' and payload number in percent
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 320,
-        "y": 180,
+        "x": 110,
+        "y": 100,
         "wires": [
             [
-                "44ae399c.bb1f98"
+                "99cde518.a2fae8"
             ]
         ]
     },
     {
-        "id": "be4c48bd.0668f8",
-        "type": "inject",
-        "z": "13346fe3.f9dbb",
-        "name": "",
-        "topic": "color",
-        "payload": "#ff4500",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 310,
-        "y": 120,
-        "wires": [
-            [
-                "44ae399c.bb1f98"
-            ]
-        ]
-    },
-    {
-        "id": "a622f4f8.d75468",
+        "id": "50450f96.e87be",
         "type": "debug",
-        "z": "13346fe3.f9dbb",
+        "z": "4352e0fd.48412",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
-        "x": 760,
-        "y": 200,
+        "complete": "true",
+        "targetType": "full",
+        "x": 560,
+        "y": 100,
         "wires": []
     },
     {
-        "id": "29d7744c.2a685c",
+        "id": "99cde518.a2fae8",
+        "type": "Sonoff device Enhanced",
+        "z": "4352e0fd.48412",
+        "mode": "0",
+        "channel": "POWER1",
+        "broker": "4333ee38.d379a",
+        "device": "tasmota",
+        "name": "Port1",
+        "onValue": "ON",
+        "offValue": "OFF",
+        "toggleValue": "toggle",
+        "cmdPrefix": "cmnd",
+        "statPrefix": "stat",
+        "telePrefix": "tele",
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "50450f96.e87be",
+                "f946cb9c.c50878"
+            ]
+        ]
+    },
+    {
+        "id": "67481b8f.dbbeb4",
+        "type": "change",
+        "z": "4352e0fd.48412",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "toggle",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "toggle",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 20,
+        "wires": [
+            [
+                "99cde518.a2fae8"
+            ]
+        ]
+    },
+    {
+        "id": "a8ea0c0c.01558",
+        "type": "wemo-emulator",
+        "z": "4352e0fd.48412",
+        "name": "Steckdose 1",
+        "friendlyName": "Port 1",
+        "serial": "port1",
+        "port": "1",
+        "onTopic": "an",
+        "onPayload": "true",
+        "offTopic": "aus",
+        "offPayload": "false",
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "67481b8f.dbbeb4"
+            ]
+        ]
+    },
+    {
+        "id": "adc57193.8c48b",
+        "type": "ui_group",
+        "z": "",
+        "name": "Tasmota",
+        "tab": "7e885294.f7eb1c",
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "4333ee38.d379a",
         "type": "mqtt-broker",
         "z": "",
-        "name": "pinky MQTT",
-        "broker": "192.168.178.55",
+        "name": "",
+        "broker": "192.168.178.105",
         "port": "1883",
         "clientid": "",
         "usetls": false,
-        "compatmode": true,
+        "compatmode": false,
         "keepalive": "60",
         "cleansession": true,
         "birthTopic": "",
@@ -176,27 +225,22 @@ send a Message with topic 'dimmer' and payload number in percent
         "willPayload": ""
     },
     {
-        "id": "9d03a37c.7d0558",
-        "type": "ui_group",
-        "z": "",
-        "name": "Raum-Temperatur",
-        "tab": "b132103a.17961",
-        "disp": true,
-        "width": "6",
-        "collapse": true
-    },
-    {
-        "id": "b132103a.17961",
+        "id": "7e885294.f7eb1c",
         "type": "ui_tab",
         "z": "",
-        "name": "Wohnzimmer",
+        "name": "Tasmato Leiste",
         "icon": "dashboard",
-        "order": 12,
+        "order": 13,
         "disabled": false,
         "hidden": false
     }
 ]
 ```
+
+I think this Sample could be a bit dirty, but in my case it works perfect
+
+## NOTE!!
+As I am not an developer (this project is an Copy and Past reuslt of wanted and unpublished features) i will try to keep it up-to-date with the Base i merged this from
 
 ## License
 
